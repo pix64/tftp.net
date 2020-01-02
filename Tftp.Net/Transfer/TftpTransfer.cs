@@ -24,20 +24,20 @@ namespace Tftp.Net.Transfer
         public bool WasStarted { get; private set; }
         public Stream InputOutputStream { get; protected set; }
 
-        public TftpTransfer(ITransferChannel connection, String filename, ITransferState initialState)
+        public TftpTransfer(ITransferChannel connection, string filename, ITransferState initialState)
         {
             this.ProposedOptions = TransferOptionSet.NewDefaultSet();
             this.Filename = filename;
             this.RetryCount = 5;
-            this.timer = new Timer(timer_OnTimer, null, 500, 500);
+            this.timer = new Timer(Timer_OnTimer, null, 500, 500);
             this.SetState(initialState);
             this.connection = connection;
-            this.connection.OnCommandReceived += new TftpCommandHandler(connection_OnCommandReceived);
-            this.connection.OnError += new TftpChannelErrorHandler(connection_OnError);
+            this.connection.OnCommandReceived += new TftpCommandHandler(Connection_OnCommandReceived);
+            this.connection.OnError += new TftpChannelErrorHandler(Connection_OnError);
             this.connection.Open();
         }
 
-        private void timer_OnTimer(object context)
+        private void Timer_OnTimer(object context)
         {
             lock (this)
             {
@@ -45,7 +45,7 @@ namespace Tftp.Net.Transfer
             }
         }
 
-        private void connection_OnCommandReceived(ITftpCommand command, EndPoint endpoint)
+        private void Connection_OnCommandReceived(ITftpCommand command, EndPoint endpoint)
         {
             lock (this)
             {
@@ -53,7 +53,7 @@ namespace Tftp.Net.Transfer
             }
         }
 
-        private void connection_OnError(TftpTransferError error)
+        private void Connection_OnError(TftpTransferError error)
         {
             lock (this)
             {
@@ -169,7 +169,7 @@ namespace Tftp.Net.Transfer
         public void Start(Stream data)
         {
             if (data == null)
-                throw new ArgumentNullException("data");
+                throw new ArgumentNullException(nameof(data));
 
             if (WasStarted)
                 throw new InvalidOperationException("This transfer has already been started.");
@@ -186,7 +186,7 @@ namespace Tftp.Net.Transfer
         public void Cancel(TftpErrorPacket reason)
         {
             if (reason == null)
-                throw new ArgumentNullException("reason");
+                throw new ArgumentNullException(nameof(reason));
 
             lock (this)
             {

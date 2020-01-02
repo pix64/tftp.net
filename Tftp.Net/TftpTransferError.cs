@@ -10,7 +10,7 @@ namespace Tftp.Net
     /// </summary>
     public abstract class TftpTransferError
     {
-        public abstract override String ToString();
+        public abstract override string ToString();
     }
 
     /// <summary>
@@ -31,7 +31,7 @@ namespace Tftp.Net
 
         public TftpErrorPacket(ushort errorCode, string errorMessage)
         {
-            if (String.IsNullOrEmpty(errorMessage))
+            if (string.IsNullOrEmpty(errorMessage))
                 throw new ArgumentException("You must provide an errorMessage.");
 
             this.ErrorCode = errorCode;
@@ -88,7 +88,7 @@ namespace Tftp.Net
 
         public override string ToString()
         {
-            return "Timeout error. RetryTimeout (" + RetryCount + ") violated more than " + RetryCount + " times in a row";
+            return "Timeout error. RetryTimeout (" + RetryTimeout + ") violated more than " + RetryCount + " times in a row";
         }
     }
 }

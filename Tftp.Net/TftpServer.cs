@@ -42,11 +42,11 @@ namespace Tftp.Net
         public TftpServer(IPEndPoint localAddress)
         {
             if (localAddress == null)
-                throw new ArgumentNullException("localAddress");
+                throw new ArgumentNullException(nameof(localAddress));
 
             serverSocket = TransferChannelFactory.CreateServer(localAddress);
-            serverSocket.OnCommandReceived += new TftpCommandHandler(serverSocket_OnCommandReceived);
-            serverSocket.OnError += new TftpChannelErrorHandler(serverSocket_OnError);
+            serverSocket.OnCommandReceived += new TftpCommandHandler(ServerSocket_OnCommandReceived);
+            serverSocket.OnError += new TftpChannelErrorHandler(ServerSocket_OnError);
         }
 
         public TftpServer(IPAddress localAddress)
@@ -78,12 +78,12 @@ namespace Tftp.Net
             serverSocket.Open();
         }
 
-        void serverSocket_OnError(TftpTransferError error)
+        void ServerSocket_OnError(TftpTransferError error)
         {
             RaiseOnError(error);
         }
 
-        private void serverSocket_OnCommandReceived(ITftpCommand command, EndPoint endpoint)
+        private void ServerSocket_OnCommandReceived(ITftpCommand command, EndPoint endpoint)
         {
             //Ignore all other commands
             if (!(command is ReadOrWriteRequest))
@@ -107,7 +107,16 @@ namespace Tftp.Net
         #region IDisposable
         public void Dispose()
         {
-            serverSocket.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                serverSocket.Dispose();
+            }
         }
         #endregion
 

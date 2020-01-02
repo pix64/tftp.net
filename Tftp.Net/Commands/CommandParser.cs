@@ -70,7 +70,7 @@ namespace Tftp.Net
         private Error ParseError(TftpStreamReader reader)
         {
             ushort errorCode = reader.ReadUInt16();
-            String message = ParseNullTerminatedString(reader);
+            string message = ParseNullTerminatedString(reader);
             return new Error(errorCode, message);
         }
 
@@ -89,7 +89,7 @@ namespace Tftp.Net
 
         private WriteRequest ParseWriteRequest(TftpStreamReader reader)
         {
-            String filename = ParseNullTerminatedString(reader);
+            string filename = ParseNullTerminatedString(reader);
             TftpTransferMode mode = ParseModeType(ParseNullTerminatedString(reader));
             IEnumerable<TransferOption> options = ParseTransferOptions(reader);
             return new WriteRequest(filename, mode, options);
@@ -97,7 +97,7 @@ namespace Tftp.Net
 
         private ReadRequest ParseReadRequest(TftpStreamReader reader)
         {
-            String filename = ParseNullTerminatedString(reader);
+            string filename = ParseNullTerminatedString(reader);
             TftpTransferMode mode = ParseModeType(ParseNullTerminatedString(reader));
             IEnumerable<TransferOption> options = ParseTransferOptions(reader);
             return new ReadRequest(filename, mode, options);
@@ -109,7 +109,7 @@ namespace Tftp.Net
 
             while (true)
             {
-                String name;
+                string name;
 
                 try
                 {
@@ -129,7 +129,7 @@ namespace Tftp.Net
             return options;
         }
 
-        private String ParseNullTerminatedString(TftpStreamReader reader)
+        private string ParseNullTerminatedString(TftpStreamReader reader)
         {
             byte b;
             StringBuilder str = new StringBuilder();
@@ -141,7 +141,7 @@ namespace Tftp.Net
             return str.ToString();
         }
 
-        private TftpTransferMode ParseModeType(String mode)
+        private TftpTransferMode ParseModeType(string mode)
         {
             mode = mode.ToLowerInvariant();
 
@@ -161,10 +161,16 @@ namespace Tftp.Net
     [Serializable]
     class TftpParserException : Exception
     {
-        public TftpParserException(String message)
+        public TftpParserException()
+            : base() { }
+
+        public TftpParserException(string message)
             : base(message) { }
 
         public TftpParserException(Exception e)
             : base("Error while parsing message.", e) { }
+
+        public TftpParserException(string message, Exception innerException)
+            : base(message, innerException) { }
     }
 }

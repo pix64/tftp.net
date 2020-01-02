@@ -84,8 +84,7 @@ namespace Tftp.Net.Transfer
 
         private bool ParseTimeoutOption(string value)
         {
-            int timeout;
-            if (!int.TryParse(value, out timeout))
+            if (!int.TryParse(value, out int timeout))
                 return false;
 
             //Only accept timeouts in the range [1, 255]
@@ -98,8 +97,7 @@ namespace Tftp.Net.Transfer
 
         private bool ParseBlockSizeOption(string value)
         {
-            int blockSize;
-            if (!int.TryParse(value, out blockSize))
+            if (!int.TryParse(value, out int blockSize))
                 return false;
 
             //Only accept block sizes in the range [8, 65464]

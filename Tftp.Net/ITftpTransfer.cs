@@ -72,7 +72,7 @@ namespace Tftp.Net
         /// <summary>
         /// Filename for the transferred file.
         /// </summary>
-        String Filename { get; }
+        string Filename { get; }
 
         /// <summary>
         /// You can set your own object here to associate custom data with this transfer.

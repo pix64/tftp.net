@@ -10,13 +10,13 @@ namespace Tftp.Net
     /// </summary>
     public class TransferOption
     {
-        public String Name { get; private set; }
-        public String Value { get; set; }
+        public string Name { get; private set; }
+        public string Value { get; set; }
         public bool IsAcknowledged { get; internal set; }
 
         internal TransferOption(string name, string value)
         {
-            if (String.IsNullOrEmpty(name))
+            if (string.IsNullOrEmpty(name))
                 throw new ArgumentException("name must not be null or empty.");
 
             if (value == null)

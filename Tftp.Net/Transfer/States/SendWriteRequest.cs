@@ -37,10 +37,8 @@ namespace Tftp.Net.Transfer.States
                 BeginSendingTo(endpoint);
             }
             else
-            if (command is Error)
+            if (command is Error error) //The server denied our request
             {
-                //The server denied our request
-                Error error = (Error)command;
                 Context.SetState(new ReceivedError(error));
             }
             else

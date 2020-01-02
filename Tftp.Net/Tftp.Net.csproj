@@ -46,6 +46,7 @@
     <Compile Include="Commands\CommandSerializer.cs" />
     <Compile Include="Commands\TftpStreamReader.cs" />
     <Compile Include="Commands\TftpStreamWriter.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="TftpClient.cs" />
     <Compile Include="TftpTransferError.cs" />
     <Compile Include="TftpTransferProgress.cs" />
@@ -84,6 +85,11 @@
     <Compile Include="Transfer\States\StateWithNetworkTimeout.cs" />
     <Compile Include="Transfer\TftpTransfer.cs" />
     <Compile Include="TftpServer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\.editorconfig">
+      <Link>.editorconfig</Link>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

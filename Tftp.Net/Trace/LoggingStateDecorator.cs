@@ -29,7 +29,7 @@ namespace Tftp.Net.Trace
             this.transfer = transfer;
         }
 
-        public String GetStateName()
+        public string GetStateName()
         {
             return "[" + decoratee.GetType().Name + "]";
         }

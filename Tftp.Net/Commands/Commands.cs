@@ -26,11 +26,11 @@ namespace Tftp.Net
     {
         private readonly ushort opCode;
 
-        public String Filename { get; private set; }
+        public string Filename { get; private set; }
         public TftpTransferMode Mode { get; private set; }
         public IEnumerable<TransferOption> Options { get; private set; }
 
-        protected ReadOrWriteRequest(ushort opCode, String filename, TftpTransferMode mode, IEnumerable<TransferOption> options)
+        protected ReadOrWriteRequest(ushort opCode, string filename, TftpTransferMode mode, IEnumerable<TransferOption> options)
         {
             this.opCode = opCode;
             this.Filename = filename;
@@ -43,7 +43,7 @@ namespace Tftp.Net
     {
         public const ushort OpCode = 1;
 
-        public ReadRequest(String filename, TftpTransferMode mode, IEnumerable<TransferOption> options)
+        public ReadRequest(string filename, TftpTransferMode mode, IEnumerable<TransferOption> options)
             : base(OpCode, filename, mode, options) { }
 
         public void Visit(ITftpCommandVisitor visitor)
@@ -56,7 +56,7 @@ namespace Tftp.Net
     {
         public const ushort OpCode = 2;
 
-        public WriteRequest(String filename, TftpTransferMode mode, IEnumerable<TransferOption> options)
+        public WriteRequest(string filename, TftpTransferMode mode, IEnumerable<TransferOption> options)
             : base(OpCode, filename, mode, options) { }
 
         public void Visit(ITftpCommandVisitor visitor)
@@ -106,9 +106,9 @@ namespace Tftp.Net
         public const ushort OpCode = 5;
 
         public ushort ErrorCode { get; private set; }
-        public String Message { get; private set; }
+        public string Message { get; private set; }
 
-        public Error(ushort errorCode, String message)
+        public Error(ushort errorCode, string message)
         {
             this.ErrorCode = errorCode;
             this.Message = message;

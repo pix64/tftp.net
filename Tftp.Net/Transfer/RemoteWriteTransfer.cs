@@ -10,7 +10,7 @@ namespace Tftp.Net.Transfer
 {
     class RemoteWriteTransfer : TftpTransfer
     {
-        public RemoteWriteTransfer(ITransferChannel connection, String filename)
+        public RemoteWriteTransfer(ITransferChannel connection, string filename)
             : base(connection, filename, new StartOutgoingWrite())
         {
         }
