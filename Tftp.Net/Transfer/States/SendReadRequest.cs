@@ -20,6 +20,7 @@ namespace Tftp.Net.Transfer.States
 
         private void SendRequest()
         {
+            // Don't propose options if we are not negotiating
             var optionsToPropose = Context.NegotiateOptions ? Context.ProposedOptions.ToOptionList() : null;
             ReadRequest request = new ReadRequest(Context.Filename, Context.TransferMode, optionsToPropose);
             SendAndRepeat(request);
@@ -50,11 +51,18 @@ namespace Tftp.Net.Transfer.States
             }
             else if (command is OptionAcknowledgement)
             {
-                //Check which options were acknowledged
-                Context.FinishOptionNegotiation(new TransferOptionSet( (command as OptionAcknowledgement).Options ));
+                if (Context.NegotiateOptions)
+                {
+                    //Check which options were acknowledged
+                    Context.FinishOptionNegotiation(new TransferOptionSet((command as OptionAcknowledgement).Options));
 
-                //the server acknowledged our options. Confirm the final options
-                SendAndRepeat(new Acknowledgement(0));
+                    //the server acknowledged our options. Confirm the final options
+                    SendAndRepeat(new Acknowledgement(0));
+                }
+                else
+                {
+                    throw new Exception("Option negotion disabled, but remote acknowledged options");
+                }
             }
             else if (command is Error)
             {
