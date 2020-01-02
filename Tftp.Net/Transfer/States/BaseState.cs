@@ -32,5 +32,10 @@ namespace Tftp.Net.Transfer.States
         {
             //Ignore timer events
         }
+
+        protected void Send(ITftpCommand command)
+        {
+            Context.GetConnection().Send(command);
+        }
     }
 }

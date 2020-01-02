@@ -70,6 +70,11 @@ namespace Tftp.Net
         bool NegotiateOptions { get; set; }
 
         /// <summary>
+        /// Tftp sender should wait for the client to ack the last packet
+        /// </summary>
+        bool WaitForFinalAck { get; set; }
+
+        /// <summary>
         /// Expected transfer size in bytes. 0 if size is unknown.
         /// </summary>
         long ExpectedSize { get; set; }

@@ -167,6 +167,13 @@ namespace Tftp.Net.Transfer
             set { ThrowExceptionIfTransferAlreadyStarted(); negotiateOptions = value; }
         }
 
+        private bool waitForFinalAck = true;
+        public virtual bool WaitForFinalAck
+        {
+            get { return waitForFinalAck; }
+            set { ThrowExceptionIfTransferAlreadyStarted(); waitForFinalAck = value; }
+        }
+
         private void ThrowExceptionIfTransferAlreadyStarted()
         {
             if (WasStarted)

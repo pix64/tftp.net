@@ -70,7 +70,19 @@ namespace Tftp.Net.Transfer.States
             }
 
             ITftpCommand dataCommand = new Data(blockNumber, lastData);
-            SendAndRepeat(dataCommand);
+            if (lastPacketWasSent && !Context.WaitForFinalAck)
+            {
+                // Send the last packet 3 times for good measure and finish up
+                Send(dataCommand);
+                Send(dataCommand);
+                Send(dataCommand);
+                Context.RaiseOnFinished();
+                Context.SetState(new Closed());
+            }
+            else
+            {
+                SendAndRepeat(dataCommand);
+            }
         }
 
         #endregion
