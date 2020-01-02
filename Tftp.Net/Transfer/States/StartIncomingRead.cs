@@ -24,17 +24,20 @@ namespace Tftp.Net.Transfer.States
         public override void OnStart()
         {
             Context.FillOrDisableTransferSizeOption();
-            Context.FinishOptionNegotiation(Context.ProposedOptions);
-            List<TransferOption> options = Context.NegotiatedOptions.ToOptionList();
-            if (options.Count > 0)
+
+            if (Context.NegotiateOptions)
             {
-                Context.SetState(new SendOptionAcknowledgementForReadRequest());
+                Context.FinishOptionNegotiation(Context.ProposedOptions);
+                List<TransferOption> options = Context.NegotiatedOptions.ToOptionList();
+                if (options.Count > 0)
+                {
+                    Context.SetState(new SendOptionAcknowledgementForReadRequest());
+                    return;
+                }
             }
-            else
-            {
-                //Otherwise just start sending
-                Context.SetState(new Sending());
-            }
+
+            //Otherwise just start sending
+            Context.SetState(new Sending());
         }
 
         public override void OnCancel(TftpErrorPacket reason)

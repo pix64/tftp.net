@@ -160,6 +160,13 @@ namespace Tftp.Net.Transfer
             set { ThrowExceptionIfTransferAlreadyStarted(); wrapping = value; }
         }
 
+        private bool negotiateOptions = true;
+        public virtual bool NegotiateOptions
+        {
+            get { return negotiateOptions; }
+            set { ThrowExceptionIfTransferAlreadyStarted(); negotiateOptions = value; }
+        }
+
         private void ThrowExceptionIfTransferAlreadyStarted()
         {
             if (WasStarted)

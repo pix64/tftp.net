@@ -22,18 +22,20 @@ namespace Tftp.Net.Transfer.States
 
         public override void OnStart()
         {
-            //Do we have any acknowledged options?
-            Context.FinishOptionNegotiation(Context.ProposedOptions);
-            List<TransferOption> options = Context.NegotiatedOptions.ToOptionList();
-            if (options.Count > 0)
+            if (Context.NegotiateOptions)
             {
-                Context.SetState(new SendOptionAcknowledgementForWriteRequest());
+                //Do we have any acknowledged options?
+                Context.FinishOptionNegotiation(Context.ProposedOptions);
+                List<TransferOption> options = Context.NegotiatedOptions.ToOptionList();
+                if (options.Count > 0)
+                {
+                    Context.SetState(new SendOptionAcknowledgementForWriteRequest());
+                    return;
+                }
             }
-            else
-            {
-                //Start receiving
-                Context.SetState(new AcknowledgeWriteRequest());
-            }
+
+            //Start receiving
+            Context.SetState(new AcknowledgeWriteRequest());
         }
 
         public override void OnCancel(TftpErrorPacket reason)

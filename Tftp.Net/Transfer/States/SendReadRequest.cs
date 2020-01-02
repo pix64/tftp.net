@@ -20,7 +20,8 @@ namespace Tftp.Net.Transfer.States
 
         private void SendRequest()
         {
-            ReadRequest request = new ReadRequest(Context.Filename, Context.TransferMode, Context.ProposedOptions.ToOptionList());
+            var optionsToPropose = Context.NegotiateOptions ? Context.ProposedOptions.ToOptionList() : null;
+            ReadRequest request = new ReadRequest(Context.Filename, Context.TransferMode, optionsToPropose);
             SendAndRepeat(request);
         }
 
@@ -35,8 +36,10 @@ namespace Tftp.Net.Transfer.States
 
             if (command is Data)
             {
-                if (Context.NegotiatedOptions == null)
+                if (Context.NegotiateOptions && Context.NegotiatedOptions == null)
+                {
                     Context.FinishOptionNegotiation(TransferOptionSet.NewEmptySet());
+                }
 
                 //Switch to the receiving state...
                 ITransferState nextState = new Receiving();

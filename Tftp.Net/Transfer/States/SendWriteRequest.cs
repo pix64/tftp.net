@@ -18,7 +18,8 @@ namespace Tftp.Net.Transfer.States
 
         private void SendRequest()
         {
-            WriteRequest request = new WriteRequest(Context.Filename, Context.TransferMode, Context.ProposedOptions.ToOptionList());
+            var optionsToPropose = Context.NegotiateOptions ? Context.ProposedOptions.ToOptionList() : null;
+            WriteRequest request = new WriteRequest(Context.Filename, Context.TransferMode, optionsToPropose);
             SendAndRepeat(request);
         }
 
@@ -33,7 +34,10 @@ namespace Tftp.Net.Transfer.States
             else
             if (command is Acknowledgement && (command as Acknowledgement).BlockNumber == 0)
             {
-                Context.FinishOptionNegotiation(TransferOptionSet.NewEmptySet());
+                if (Context.NegotiateOptions)
+                {
+                    Context.FinishOptionNegotiation(TransferOptionSet.NewEmptySet());
+                }
                 BeginSendingTo(endpoint);
             }
             else

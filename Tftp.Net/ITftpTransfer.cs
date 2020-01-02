@@ -65,6 +65,11 @@ namespace Tftp.Net
         BlockCounterWrapAround BlockCounterWrapping { get; set; }
 
         /// <summary>
+        /// Tftp transfer should attempt option negotiatation.
+        /// </summary>
+        bool NegotiateOptions { get; set; }
+
+        /// <summary>
         /// Expected transfer size in bytes. 0 if size is unknown.
         /// </summary>
         long ExpectedSize { get; set; }

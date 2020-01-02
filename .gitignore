@@ -1,3 +1,6 @@
 obj
 /.vs/Tftp.Net/v16
 /Tftp.Net.v12.suo
+/Tftp.Net/bin/Debug
+/Tftp.Net.SampleClient/bin/Debug
+/Tftp.Net.SampleServer/bin/Debug
